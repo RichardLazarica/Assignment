@@ -4,7 +4,9 @@ import ddf.minim.AudioBuffer;
 import ddf.minim.AudioInput;
 import ddf.minim.AudioPlayer;
 import ddf.minim.Minim;
+import ddf.minim.analysis.FFT;
 import processing.core.PApplet;
+import processing.core.PShape;
 
 public class Audio1 extends PApplet
 {
@@ -12,6 +14,10 @@ public class Audio1 extends PApplet
     AudioPlayer ap;
     AudioInput ai;
     AudioBuffer ab;
+
+    //AudioIn input;
+    FFT fft;
+    PShape cube;
 
     int mode = 0;
 
@@ -55,6 +61,14 @@ public class Audio1 extends PApplet
         smoothedY = y;
 
         lerpedBuffer = new float[width];
+
+        
+        cube = createShape(BOX, 50);
+        cube.setStroke(color(255));
+        cube.setFill(color(255, 0, 0));
+
+        // Setup FFT for audio analysis
+        fft = new FFT(ap.bufferSize(), ap.sampleRate());
     }
 
     float off = 0;
@@ -107,28 +121,27 @@ public class Audio1 extends PApplet
             break;
         case 2:
             {
-                
-                    float c = map(smoothedAmplitude, 0, 0.5f, 0, 255);
-                    background(0, 0, 0, 10);
-                    stroke(c, 255, 255);	
-                    float radius = map(smoothedAmplitude, 0, 0.1f, 50, 300);		
-                    int points = (int)map(mouseX, 0, 255, 3, 10);
-                    int sides = points * 2;
-                    float px = cx;
-                    float py = cy - radius; 
-                    for(int i = 0 ; i <= sides ; i ++)
-                    {
-                        float r = (i % 2 == 0) ? radius : radius / 2; 
-                        // float r = radius;
-                        float theta = map(i, 0, sides, 0, TWO_PI);
-                        float x = cx + sin(theta) * r;
-                        float y = cy - cos(theta) * r;
-                        
-                        //circle(x, y, 20);
-                        line(px, py, x, y);
-                        px = x;
-                        py = y;
-                    }
+                float c = map(smoothedAmplitude, 0, 0.5f, 0, 255);
+                background(0, 0, 0, 10);
+                stroke(c, 255, 255);	
+                float radius = map(smoothedAmplitude, 0, 0.1f, 50, 300);		
+                int points = (int)map(mouseX, 0, 255, 3, 10);
+                int sides = points * 2;
+                float px = cx;
+                float py = cy - radius; 
+                for(int i = 0 ; i <= sides ; i ++)
+                {
+                    float r = (i % 2 == 0) ? radius : radius / 2; 
+                    // float r = radius;
+                    float theta = map(i, 0, sides, 0, TWO_PI);
+                    float x = cx + sin(theta) * r;
+                    float y = cy - cos(theta) * r;
+                    
+                    //circle(x, y, 20);
+                    line(px, py, x, y);
+                    px = x;
+                    py = y;
+                }
             }
             break;
         case 3:
@@ -156,6 +169,21 @@ public class Audio1 extends PApplet
             }
             break;
         case 5:
+            background(0);
+            float amplitude = fft.getAvg();
+                
+            // Calculate the movement towards the screen based on amplitude
+            float zMovement = map(amplitude, 0, 1, -200, 0);
+            
+            // Set the position of the cube
+            float x = width / 2;
+            float y = height / 2;
+            float z = -200;  // Start position behind the screen
+            translate(x, y, z + zMovement);  // Move the cube towards the screen
+            
+            // Draw the cube
+            shape(cube);
+            break;
         }
         
 

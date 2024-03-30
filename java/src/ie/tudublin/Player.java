@@ -1,5 +1,6 @@
 package ie.tudublin;
 
+import processing.core.PConstants;
 import processing.core.PVector;
 
 public class Player {
@@ -56,22 +57,22 @@ public class Player {
         if (yasc.keyPressed)
         {
             
-            if (yasc.keyCode == yasc.LEFT)
+            if (yasc.keyCode == PConstants.LEFT)
             {
                 rotation -= 0.1f;
             }
 
-            if (yasc.keyCode == yasc.RIGHT)
+            if (yasc.keyCode == PConstants.RIGHT)
             {
                 rotation += 0.1f;
             }
 
-            if (yasc.keyCode == yasc.UP)
+            if (yasc.keyCode == PConstants.UP)
             {
                 pos.y = pos.y - 1;
             }
 
-            if (yasc.keyCode == yasc.DOWN)
+            if (yasc.keyCode == PConstants.DOWN)
             {
                 pos.y = pos.y + 1;
             }
