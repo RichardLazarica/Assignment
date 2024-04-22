@@ -1,14 +1,14 @@
-# Project Title
+# Music Visualiser
 
 Include for each contributer:
 
-Name:
+Name: Richard Lazarica
 
-Student Number: 
+Student Number: C22739341
+ 
+Class Group: C
 
-Class Group:
-
-Github: 
+Github: https://github.com/RichardLazarica/Assignment
 
 # Video
 
