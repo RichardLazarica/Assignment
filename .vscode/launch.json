@@ -2,6 +2,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Assignment7",
+            "request": "launch",
+            "mainClass": "ie.tudublin.Assignment7",
+            "projectName": "java"
+        },
+        {
+            "type": "java",
+            "name": "Assignment5",
+            "request": "launch",
+            "mainClass": "ie.tudublin.Assignment5",
+            "projectName": "java"
+        },
+        {
+            "type": "java",
             "name": "Launch Main",
             "request": "launch",
             "mainClass": "ie.tudublin.Main",

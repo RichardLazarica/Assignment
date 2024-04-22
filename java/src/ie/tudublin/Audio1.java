@@ -1,5 +1,7 @@
 package ie.tudublin;
 
+import com.jogamp.opengl.Threading.Mode;
+
 import ddf.minim.AudioBuffer;
 import ddf.minim.AudioInput;
 import ddf.minim.AudioPlayer;
@@ -170,7 +172,7 @@ public class Audio1 extends PApplet
             break;
         case 5:
             background(0);
-            float amplitude = fft.getAvg();
+            float amplitude = fft.getAvg(ARGB);
                 
             // Calculate the movement towards the screen based on amplitude
             float zMovement = map(amplitude, 0, 1, -200, 0);
