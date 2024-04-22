@@ -36,11 +36,11 @@ Github: https://github.com/RichardLazarica/Assignment
 
 # What I am most proud of in the assignment
 
-Each team member
+Richard Lazarica: I am proud that I was able to create a music visualiser even though I'm not good at handling problems or projects that have or represents something graphical.
 
 # What I learned
 
-Each team member
+Richard Lazarica: I have learned about OOP and how to use them adequately with graphic library in order to represent frequencies visually. It helped refine my knowledge I previously had about OOP principles and learned how to create graphical animated objects from scratch.
 
 # Proposal submitted earlier can go here (if there is one):
 
