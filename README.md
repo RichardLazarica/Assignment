@@ -1,4 +1,4 @@
-# Music Visualiser
+# Abstract Visual Story of a Song Team Project
 
 Include for each contributer:
 
