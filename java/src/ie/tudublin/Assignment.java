@@ -1,13 +1,22 @@
+/*
+ * Author: Richard Lazarica
+ * 
+ * Description: Program that visualizes audio data using Processing and Minim libraries.
+ * The program reads audio data from a file and displays it in various ways based on the user's input.
+ * The user can switch between different visualizations by pressing keys from 0 to 9.
+ * 
+ */
+
+
 package ie.tudublin;
 
 import ddf.minim.AudioBuffer;
 import ddf.minim.AudioInput;
 import ddf.minim.AudioPlayer;
 import ddf.minim.Minim;
-import ddf.minim.analysis.FFT;
 import processing.core.PApplet;
 import processing.core.PShape;
-import java.util.*;
+
 
 
 public class Assignment extends PApplet{
@@ -16,8 +25,7 @@ public class Assignment extends PApplet{
     AudioInput ai;
     AudioBuffer ab;
 
-    //AudioIn input;
-    FFT fft;
+
     PShape cube;
 
 
@@ -31,14 +39,14 @@ public class Assignment extends PApplet{
     float lerpedFrequency;
 
 
-    float scoreLow = 0;
-    float scoreMid = 0;
-    float scoreHi = 0;
 
-    int numSpheres = 5; // Number of spheres in each ring
+    //Case 9 VARIABLES
+    int numCorners = 5; // Number of corners
     float radius1 = 150; // Radius of the first ring
     float radius2 = 100; // Radius of the second ring
     float angleOffset = 0; // Angle offset for the second ring
+
+    //Global variable for the color
     float cc;
 
 
@@ -88,20 +96,17 @@ public class Assignment extends PApplet{
         cube = createShape(BOX, 50);
         cube.setStroke(color(255));
         cube.setFill(color(255, 0, 0));
-
-        // Setup FFT for audio analysis
-        fft = new FFT(width, 44100);
-
-        frameRate(60);
+    
     }
 
 
     public void draw()
     {
-        //background(0);
+        background(0);
         float halfH = height / 2;
         float average = 0;
         float sum = 0;
+        frameRate(60);
         
         // Calculate sum and average of the samples
         // Also lerp each element of buffer;
@@ -116,9 +121,7 @@ public class Assignment extends PApplet{
         // used for smoothing the amplitude to make it less jittery
         // and be used on the screen to make it more visually appealing
         smoothedAmplitude = lerp(smoothedAmplitude, average, 0.1f);
-        
-        float cx = width / 2;
-        float cy = height / 2;
+
 
         switch (mode)
         {
@@ -136,13 +139,12 @@ public class Assignment extends PApplet{
                 break;
             }
 
-
+            // Draw lines based on amplitude
             case 1:
             {
                 background(0);
                 for(int i = 0 ; i < ab.size() ; i ++)
                 {
-                    //float c = map(ab.get(i), -1, 1, 0, 255);
                     float c = map(i, 0, ab.size(), 0, 255);
                     stroke(c, 255, 255);
                     float f = lerpedBuffer[i] * halfH * 4.0f;
@@ -151,47 +153,72 @@ public class Assignment extends PApplet{
                 break;
             }
 
-
+            // Draw circles based on amplitude
             case 2:
-            {
-                float c = map(smoothedAmplitude, 0, 0.5f, 0, 255);
-                background(0, 0, 0, 10);
-                stroke(c, 255, 255);	
-                float radius = map(smoothedAmplitude, 0, 0.1f, 50, 300);		
-                int points = (int)map(mouseX, 0, 255, 3, 10);
-                int sides = points * 2;
-                float px = cx;
-                float py = cy - radius; 
-                for(int i = 0 ; i <= sides ; i ++)
-                {
-                    float r = (i % 2 == 0) ? radius : radius / 2; 
-                    // float r = radius;
-                    float theta = map(i, 0, sides, 0, TWO_PI);
-                    float x = cx + sin(theta) * r;
-                    float y = cy - cos(theta) * r;
-                    
-                    //circle(x, y, 20);
-                    line(px, py, x, y);
-                    px = x;
-                    py = y;
+            {                
+                background(0);
+                translate(width / 2, height / 2); // Move the origin to the center of the screen
+
+                float maxRadius = min(width, height) * 4.2f; // Maximum radius for the circles
+                float step = TWO_PI / ab.size(); // Angle step between each circle
+                float angle = 0; // Initial angle
+
+                for (int i = 0; i < ab.size(); i++) {
+                    float radius = maxRadius * lerpedBuffer[i]; // Radius of the circle based on amplitude
+                    float x = cos(angle) * radius; // Calculate x position
+                    float y = sin(angle) * radius; // Calculate y position
+
+                    float c = map(i, 0, ab.size(), 0, 255); // Map color based on index
+                    stroke(c, 255, 255); // Set stroke color
+                    noFill(); // No fill for circles
+                    ellipse(x, y, 20, 20); // Draw the circle
+
+                    angle += step; // Increment angle for the next circle
                 }
                 break;
             }
             
-
+            // Draw a spiral based on amplitude
             case 3:
             {
                 background(0);
-                strokeWeight(2);
-                noFill();
-                float r = map(smoothedAmplitude, 0, 0.5f, 100, 2000);
-                float c = map(smoothedAmplitude, 0, 0.5f, 0, 255);
-                stroke(c, 255, 255);
-                circle(cx, cy, r);
+                translate(width / 2, height / 2); 
+                float maxRadius = min(width, height) * 0.4f; 
+                float rotationSpeed = 0.02f; 
+                
+                float segments = ab.size();
+                float segmentAngle = TWO_PI / segments; // Angle increment for each segment and use two pi to get a full circle
+                
+    
+                for (int i = 0; i < segments; i++) {
+
+                    float angle = i * segmentAngle; // Calculate angle for this segment
+                    
+                    float radius = maxRadius + lerpedBuffer[i] * 500; // Scale radius based on amplitude
+                    
+                    // Calculate x and y coordinates for the start point of the segment
+                    float x1 = cos(angle) * radius; 
+                    float y1 = sin(angle) * radius; 
+                    
+                    // Calculate angle and radius for the end point of the segment
+                    float nextAngle = angle + segmentAngle; 
+                    float nextRadius = maxRadius + lerpedBuffer[i] * 500; 
+                    
+                    // Calculate x and y coordinates for the end point of the segment
+                    float x2 = cos(nextAngle) * nextRadius; 
+                    float y2 = sin(nextAngle) * nextRadius; 
+                    
+                    float c = map(i, 0, segments, 0, 255); 
+                    
+                    stroke(c, 255, 255); 
+                    line(x1, y1, x2, y2);
+                }
+                
+                rotate(rotationSpeed); 
                 break;
             }
 
-
+            // Draw lines and circles based on amplitude
             case 4:
             {
                 background(0);
@@ -209,37 +236,43 @@ public class Assignment extends PApplet{
                 }
                 break;
             }
-                
+            
+
+            // Draw lines and circles based on amplitude with rotation
             case 5:
             {
                 background(0);
                 strokeWeight(2);
-                float angle2 = 0; // Initialize rotation angle
+                float angle2 = 0;
+
+                // Loop through the audio buffer and draw lines and circles
                 for(int i = 0 ; i < ab.size() ; i += 8)
                 {
-                    float cc = map(i, 0, ab.size(), 0, 255); // map the color of the circle to the index of the buffer
+                    float cc = map(i, 0, ab.size(), 0, 255);
                     stroke(cc, 255, 255); 
-                    float f = lerpedBuffer[i] * halfH * 2.0f; // calculate the height of the line based on the buffer value
+                    float f = lerpedBuffer[i] * halfH * 2.0f; //height of the line based on the buffer value
                     
                     pushMatrix(); // Save the current transformation matrix
                     translate(width/15, height/15); // Translate to the center of the canvas
                     rotate(angle2); // Apply rotation
                     
-                    line(halfH, i, halfH + f, i); // draw a line from the center to the buffer value on the x-axis
-                    line(halfH, i, halfH - f, i); // draw a line from the center to the buffer value on the x-axis
-                    fill(cc); 
-                    circle(halfH + f, i, 10); // draw a circle at the end of the line on the x-axis
-                    circle(halfH - f, i, 10); // draw a circle at the end of the line on the x-axis
+                    
+                    line(halfH, i, halfH + f, i); 
+                    line(halfH, i, halfH - f, i); 
+                    fill(cc);
+
+                    circle(halfH + f, i, 10); 
+                    circle(halfH - f, i, 10); 
                     stroke(255);
                     noFill();
                     
-                    popMatrix(); // Restore the previous transformation matrix
+                    popMatrix(); // Restore the transformation matrix
                 }
-
-                angle2 += 0.01; // Increment rotation angle
+                angle2 += 0.1; // Increment rotation angle
                 break;
             }
             
+            // Draw cubes in a circle based on amplitude
             case 6:
             {
                 float colour = map(smoothedAmplitude, 0, 0.5f, 0, 255);
@@ -254,13 +287,14 @@ public class Assignment extends PApplet{
                 int numCubes = 5; // Number of cubes to display
                 float spacing = 200; // Spacing between cubes
 
+                // Draw cubes in a circle
                 for (int i = 0; i < numCubes; i++)
                 {
                     pushMatrix();
                     float angle = map(i, 0, numCubes, 0, TWO_PI);
                     float x = spacing * cos(angle);
                     float y = spacing * sin(angle);
-                    translate(x, y);
+                    translate(x, y, 100);
                     rotateZ(frameCount * 0.01f);
                     shape(cube);
                     box(200);
@@ -269,7 +303,7 @@ public class Assignment extends PApplet{
                 break;
             }
             
-
+            // Draw spheres in a circle based on amplitude
             case 7: 
             {
                 background(0);
@@ -280,9 +314,6 @@ public class Assignment extends PApplet{
                 noFill();
 
                 float colour = map(smoothedAmplitude, 0, 0.5f, 0, 255);
-                //stroke(colour, 255, 255);
-                
-                //float amplitude = map(smoothedAmplitude, 0, 0.5f, 50, 100);
                 float frequency = map(smoothedAmplitude, 0, 0.5f, 3, 150);
                 float radius = map(smoothedAmplitude, 0, 0.5f, 50, 1000);
                 for (int i = 0; i < frequency; i++)
@@ -295,7 +326,7 @@ public class Assignment extends PApplet{
                     stroke(80, 255, 255);
                     pushMatrix();
                     translate(x, y, z);
-                    sphere(20); // the size of the sphere
+                    sphere(20); 
                     
                     popMatrix();
                     
@@ -323,6 +354,7 @@ public class Assignment extends PApplet{
                 noFill();
                 PShape cubeShape = createShape(BOX, 100);
                
+                // Loop for the cubes to move
                 for(int i = 0; i < ab.size(); i += 12)
                 {
                     cc = map(i, 0, ab.size(), 0, 255);
@@ -335,7 +367,7 @@ public class Assignment extends PApplet{
                 break;
             }
         
-        
+            // Draw a spiral with lines based on amplitude
             case 8: 
             {
                 background(0);
@@ -349,43 +381,39 @@ public class Assignment extends PApplet{
                 float segmentAngle = TWO_PI / segments;
                 float maxRadius = min(width, height) * 0.4f;
             
-              
-            
+                //
                 for (int i = 0; i < segments; i+= 1)
                 {
                     float angle = i * segmentAngle;
                     
             
-                    float radius = maxRadius + smoothedAmplitude * 500; // Adjust multiplier for size
+                    float radius = maxRadius + smoothedAmplitude * 400; // Adjust multiplier for size
 
                     
-                
+                    // Calculate the current point
                     float x1 = cos(angle) * radius;
                     float y1 = sin(angle) * radius;
                     float nextAngle = angle + segmentAngle;
 
-                
-                    float x2 = cos(nextAngle) * (radius - smoothedAmplitude * 0.5f); // Adjust segment length
-                    float y2 = sin(nextAngle) * (radius - smoothedAmplitude * 0.5f); // Adjust segment length
+                    // Calculate the next point
+                    float x2 = cos(nextAngle) * (radius - smoothedAmplitude * 0.4f); 
+                    float y2 = sin(nextAngle) * (radius - smoothedAmplitude * 0.4f); 
 
                     line(x1, y1, x2, y2);
                 
+                    // Draw lines based on amplitude
                     for (int j = 0; j < ab.size(); j++) 
                     {
                         float cc = map(i, 0, ab.size(), 0, 255);
                         stroke(cc, 255, 255);
-                        float f = lerpedBuffer[i] * halfH * 6.0f;
+                        float f = lerpedBuffer[i] * halfH * 4.0f;
                         line(x1, y1 + f, x2, y2 - f);
                     }
                 }
-
-                
                 break;
             }
         
-                
-                
-        
+            //Random zigzag nodes    
             case 9:
             {
                 background(0);
@@ -393,33 +421,30 @@ public class Assignment extends PApplet{
                 rotateX(frameCount * 0.001f);
                 rotateY(frameCount * 0.001f);
                 
-                //screenZ(mouseX * 0.01f, 0, 0); // Rotate around the x-axis based on the mouse position
-                // rotateY(mouseY * 0.01f); // Rotate around the y-axis based on the mouse position
-                // rotateZ(mouseX * 0.01f); // Rotate around the z-axis based on the mouse wheel
-
                 frameRate(60);
             
-                //Draw second ring
-                for (int i = 0; i < numSpheres; i++)
+             
+                for (int i = 0; i < numCorners; i++)
                 {
-                    
-                    float angle = map(i, 0, numSpheres, 0, TWO_PI) + angleOffset;
+                    float angle = map(i, 0, numCorners, 0, TWO_PI) + angleOffset;
                     float x = radius2 * cos(angle);
                     float y = radius2 * sin(angle);
                     noFill();
                     PShape cubeShape = createShape(BOX, 100);
                     
-                    for(int k = 0; k < ab.size(); k += 50)
+
+                    // Loop for the cube to move up and down based on the buffer value
+                    for(int k = 0; k < ab.size(); k += 100)
                     {
                         float cc = map(k, 0, ab.size(), 0, 255);
-                        
                         float f = lerpedBuffer[k] * halfH * 4.0f;
                         shape(cubeShape, x, f);
+                        translate(x, y);
                         
                         stroke(cc, 255, 255);
                     }
                 
-                
+                    // Loop for DNA strain effect from one cube to another
                     for (int j = 0; j < ab.size(); j += 30)
                     {
                         float cc = map(j, 0, ab.size(), 0, 255);
@@ -438,9 +463,6 @@ public class Assignment extends PApplet{
                 angleOffset += 0.009f;
                 break; 
             }
-
-
-        
         }
 
     }
