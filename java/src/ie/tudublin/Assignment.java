@@ -42,11 +42,7 @@ public class Assignment extends PApplet{
     float lerpedFrequency;
 
 
-    //Case 9 VARIABLES
-    int numCorners = 5; // Number of corners
-    float radius1 = 150; // Radius of the first ring
-    float radius2 = 100; // Radius of the second ring
-    float angleOffset = 0; // Angle offset for the second ring
+    
 
     //Global variable for the color
     float cc;
@@ -130,39 +126,11 @@ public class Assignment extends PApplet{
         // and be used on the screen to make it more visually appealing
         smoothedAmplitude = lerp(smoothedAmplitude, average, 0.1f);
 
-
         switch (mode)
         {
-			case 0:
-            {
-                background(0);
-                for(int i = 0 ; i < ab.size() ; i ++)
-                {
-                    //float c = map(ab.get(i), -1, 1, 0, 255);
-                    float c = map(i, 0, ab.size(), 0, 255);
-                    stroke(c, 255, 255);
-                    float f = lerpedBuffer[i] * halfH * 4.0f;
-                    line(i, halfH + f, i, halfH - f);                    
-                }
-                break;
-            }
-
-            // Draw lines based on amplitude
-            case 1:
-            {
-                background(0);
-                for(int i = 0 ; i < ab.size() ; i ++)
-                {
-                    float c = map(i, 0, ab.size(), 0, 255);
-                    stroke(c, 255, 255);
-                    float f = lerpedBuffer[i] * halfH * 4.0f;
-                    line(i, halfH + f, halfH - f, i);                    
-                }
-                break;
-            }
-
+		
             // Draw circles based on amplitude
-            case 2:
+            case 0:
             {                
                 background(0);
                 translate(width / 2, height / 2); // Move the origin to the center of the screen
@@ -186,68 +154,11 @@ public class Assignment extends PApplet{
                 break;
             }
             
-            // Draw a spiral based on amplitude
-            case 3:
-            {
-                background(0);
-                translate(width / 2, height / 2); 
-                float maxRadius = min(width, height) * 0.4f; 
-                float rotationSpeed = 0.02f; 
-                
-                float segments = ab.size();
-                float segmentAngle = TWO_PI / segments; // Angle increment for each segment and use two pi to get a full circle
-                
-    
-                for (int i = 0; i < segments; i++) {
-
-                    float angle = i * segmentAngle; // Calculate angle for this segment
-                    
-                    float radius = maxRadius + lerpedBuffer[i] * 500; // Scale radius based on amplitude
-                    
-                    // Calculate x and y coordinates for the start point of the segment
-                    float x1 = cos(angle) * radius; 
-                    float y1 = sin(angle) * radius; 
-                    
-                    // Calculate angle and radius for the end point of the segment
-                    float nextAngle = angle + segmentAngle; 
-                    float nextRadius = maxRadius + lerpedBuffer[i] * 500; 
-                    
-                    // Calculate x and y coordinates for the end point of the segment
-                    float x2 = cos(nextAngle) * nextRadius; 
-                    float y2 = sin(nextAngle) * nextRadius; 
-                    
-                    float c = map(i, 0, segments, 0, 255); 
-                    
-                    stroke(c, 255, 255); 
-                    line(x1, y1, x2, y2);
-                }
-                
-                rotate(rotationSpeed); 
-                break;
-            }
-
-            // Draw lines and circles based on amplitude
-            case 4:
-            {
-                background(0);
-                strokeWeight(2);
-                for(int i = 0 ; i < ab.size() ; i +=10)
-                {
-                    //float c = map(ab.get(i), -1, 1, 0, 255);
-                    float cc = map(i, 0, ab.size(), 0, 255);
-                    stroke(cc, 255, 255);
-                    float f = lerpedBuffer[i] * halfH * 4.0f;
-                    line(i, halfH + f, i, halfH - f);
-                    fill(cc);
-                    circle(i, halfH + f, 5);                    
-                    circle(i, halfH - f, 5);                    
-                }
-                break;
-            }
+            
             
 
             // Draw lines and circles based on amplitude with rotation
-            case 5:
+            case 1:
             {
                 background(0);
                 strokeWeight(2);
@@ -281,7 +192,7 @@ public class Assignment extends PApplet{
             }
             
             // Draw cubes in a circle based on amplitude
-            case 6:
+            case 2:
             {
                 float colour = map(smoothedAmplitude, 0, 0.5f, 0, 255);
                 background(0);
@@ -312,54 +223,7 @@ public class Assignment extends PApplet{
             }
             
         
-            //Random zigzag nodes    
-            case 7:
-            {
-                background(0);
-                translate(width/2, height/2, 0); // Move to the center of the screen
-                rotateX(frameCount * 0.001f);
-                rotateY(frameCount * 0.001f);
-                
-             
-                for (int i = 0; i < numCorners; i++)
-                {
-                    float angle = map(i, 0, numCorners, 0, TWO_PI) + angleOffset;
-                    float x = radius2 * cos(angle);
-                    float y = radius2 * sin(angle);
-                    noFill();
-                    PShape cubeShape = createShape(BOX, 100);
-                    
 
-                    // Loop for the cube to move up and down based on the buffer value
-                    for(int k = 0; k < ab.size(); k += 100)
-                    {
-                        float cc = map(k, 0, ab.size(), 0, 255);
-                        float f = lerpedBuffer[k] * halfH * 4.0f;
-                        shape(cubeShape, x, f);
-                        translate(x, y);
-                        
-                        stroke(cc, 255, 255);
-                    }
-                
-                    // Loop for DNA strain effect from one cube to another
-                    for (int j = 0; j < ab.size(); j += 30)
-                    {
-                        float cc = map(j, 0, ab.size(), 0, 255);
-                        stroke(cc, 255, 255);
-                        float f = lerpedBuffer[j] * halfH * 6.0f; // calculate the height of the line based on the buffer value
-                        line(x, y + f, x, y - f);
-                        fill(cc, 255, 255);
-                        translate(0, x, y);
-                        circle(x, y + f, 20);                    
-                        circle(x, y - f, 20);
-                        
-                    }
-                }
-
-                // Update angle offset to make the rings cross each other
-                angleOffset += 0.009f;
-                break; 
-            }
         }
 
     }
