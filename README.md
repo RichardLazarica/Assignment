@@ -32,16 +32,29 @@ The user can switch between different visualizations by pressing keys from 0 to 
 # How it works:
 The user chooses between various visualisations by pressing keyboards keys between 0 - 9
 
+First visualisation (Ellipses with circle radius): 
+Draws ellipses(circles) whose radii are determined by the amplitude of audio samples.
+It calculates the maximum radius of the circle based on screen size and divides the circle into equal parts based on the audio buffer size.
+Each circle's radius corresponds to the amplitude of the audio at a particular point in the buffer.
+
+
+Second visualisation (Lines and circles DNA Strain):
+Lines and circles are drawn based on the amplitude of audio samples.
+Lines are drawn vertically with heights determined by the amplitude, and circles are drawn at the endpoints of each line.
+The entire set of lines and circles rotates gradually, imitating a DNA strain.
+
+Third visualisation (Cubes):
+Draws cubes arranged in a circular pattern, where the size and position of each cube are influenced by the amplitude of the audio.
+Cubes are drawn in a circle, and their positions are calculated based on trigonometric functions.
+The color of the cubes is mapped to the smoothed amplitude of the audio.
+
+
 # List of classes/assets in the project
 
 | Class/asset | Source |
 |-----------|-----------|
 | Assignment.java | Self written |
 
-
-# References
-* Item 1
-* Item 2
 
 # What I am most proud of in the assignment
 
