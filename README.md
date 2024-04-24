@@ -1,14 +1,14 @@
-# Project Title
+# Abstract Visual Story of a Song Team Project
 
 Include for each contributer:
 
-Name:
+Name: Richard Lazarica
 
-Student Number: 
+Student Number: C22739341
+ 
+Class Group: C
 
-Class Group:
-
-Github: 
+Github: https://github.com/RichardLazarica/Assignment
 
 # Video
 
@@ -36,11 +36,11 @@ Github:
 
 # What I am most proud of in the assignment
 
-Each team member
+Richard Lazarica: I am proud that I was able to create a music visualiser even though I'm not good at handling problems or projects that have or represents something graphical.
 
 # What I learned
 
-Each team member
+Richard Lazarica: I have learned about OOP and how to use them adequately with graphic library in order to represent frequencies visually. It helped refine my knowledge I previously had about OOP principles and learned how to create graphical animated objects from scratch.
 
 # Proposal submitted earlier can go here (if there is one):
 
