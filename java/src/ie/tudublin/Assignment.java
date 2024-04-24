@@ -42,7 +42,11 @@ public class Assignment extends PApplet{
     float lerpedFrequency;
 
 
-    
+    //Case 9 VARIABLES
+    int numCorners = 5; // Number of corners
+    float radius1 = 150; // Radius of the first ring
+    float radius2 = 100; // Radius of the second ring
+    float angleOffset = 0; // Angle offset for the second ring
 
     //Global variable for the color
     float cc;
@@ -96,9 +100,6 @@ public class Assignment extends PApplet{
         cube = createShape(BOX, 50);
         cube.setStroke(color(255));
         cube.setFill(color(255, 0, 0));
-
-
-    
     }
 
 
@@ -111,7 +112,6 @@ public class Assignment extends PApplet{
         frameRate(60);
 
 
-        
         // Calculate sum and average of the samples
         // Also lerp each element of buffer;
         for(int i = 0 ; i < ab.size() ; i ++)
@@ -125,6 +125,7 @@ public class Assignment extends PApplet{
         // used for smoothing the amplitude to make it less jittery
         // and be used on the screen to make it more visually appealing
         smoothedAmplitude = lerp(smoothedAmplitude, average, 0.1f);
+
 
         switch (mode)
         {
@@ -155,8 +156,6 @@ public class Assignment extends PApplet{
             }
             
             
-            
-
             // Draw lines and circles based on amplitude with rotation
             case 1:
             {
@@ -174,7 +173,6 @@ public class Assignment extends PApplet{
                     pushMatrix(); // Save the current transformation matrix
                     translate(width/15, height/15); // Translate to the center of the canvas
                     rotate(angle2); // Apply rotation
-                    
                     
                     line(halfH, i, halfH + f, i); 
                     line(halfH, i, halfH - f, i); 
