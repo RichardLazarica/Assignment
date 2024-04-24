@@ -6,7 +6,7 @@ Name: Richard Lazarica
 
 Student Number: C22739341
  
-Class Group: C
+Class Group: B
 
 Github: https://github.com/RichardLazarica/Assignment
 
