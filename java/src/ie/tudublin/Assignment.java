@@ -70,7 +70,7 @@ public class Assignment extends PApplet{
 
     public void settings()
     {
-        size(1024, 1000, P3D);
+        size(1600, 1000, P3D);
 
         //fullScreen(P3D, SPAN);
     }
@@ -171,8 +171,8 @@ public class Assignment extends PApplet{
                     float f = lerpedBuffer[i] * halfH * 2.0f; //height of the line based on the buffer value
                     
                     pushMatrix(); // Save the current transformation matrix
-                    translate(width/15, height/15); // Translate to the center of the canvas
-                    rotate(angle2); // Apply rotation
+                    translate(cc +300, height/15); 
+                    rotate(angle2);
                     
                     line(halfH, i, halfH + f, i); 
                     line(halfH, i, halfH - f, i); 
@@ -200,8 +200,8 @@ public class Assignment extends PApplet{
                 noFill();
                 stroke(colour, 255, 255);
 
-                int numCubes = 5; // Number of cubes to display
-                float spacing = 200; // Spacing between cubes
+                int numCubes = 5; 
+                float spacing = 200; 
 
                 // Draw cubes in a circle
                 for (int i = 0; i < numCubes; i++)
@@ -222,7 +222,6 @@ public class Assignment extends PApplet{
                 break;
             }
         }
-
     }
 }
 
