@@ -130,13 +130,14 @@ public class Assignment extends PApplet{
                 translate(width / 2, height / 2); // Move the origin to the center of the screen
 
                 // Calculate the maximum radius of the circle based on the width and height of the screen
-                float maxRadius = min(width, height) * 4.2f; 
+                float maxRadius = min(width, height) * 3f; 
 
                 // divide the circle into equal parts based on the size of the audio buffer
+                
                 float step = TWO_PI / ab.size();  
                 float angle = 0;
 
-                for (int i = 0; i < ab.size(); i++)
+                for (int i = 0; i < ab.size(); i ++)
                 {
                     // radius of the circle based on the amplitude
                     float radius = maxRadius * lerpedBuffer[i]; 
@@ -163,7 +164,7 @@ public class Assignment extends PApplet{
                 float angle2 = 0;
 
                 // Loop through the audio buffer and draw lines and circles
-                for(int i = 0 ; i < ab.size() ; i += 8)
+                for(int i = 0 ; i < ab.size() ; i += 10)
                 {
                     float cc = map(i, 0, ab.size(), 0, 255);
                     stroke(cc, 255, 255); 
@@ -208,7 +209,7 @@ public class Assignment extends PApplet{
                     pushMatrix();
                     // Calculate the angle and x, y coordinates of the cube
                     // two pi is the full circle
-                    
+
                     float angle = map(i, 0, numCubes, 0, TWO_PI);
                     float x = spacing * cos(angle);
                     float y = spacing * sin(angle);
