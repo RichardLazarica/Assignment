@@ -114,7 +114,7 @@ public class Assignment extends PApplet{
             lerpedBuffer[i] = lerp(lerpedBuffer[i], ab.get(i), 0.05f);
             cc = map(i, 0, ab.size(), 0, 255);
         }
-        average= sum / (float) ab.size();
+        average = sum / (float) ab.size();
 
         // used for smoothing the amplitude to make it less jittery
         // and be used on the screen to make it more visually appealing
@@ -123,27 +123,33 @@ public class Assignment extends PApplet{
 
         switch (mode)
         {
-            // Draw circles based on amplitude
+            // Draw circles based on amplitude by mapping the amplitude to the radius of the circle
             case 0:
             {                
                 background(0);
                 translate(width / 2, height / 2); // Move the origin to the center of the screen
 
-                float maxRadius = min(width, height) * 4.2f; // Maximum radius for the circles
-                float step = TWO_PI / ab.size(); // Angle step between each circle
-                float angle = 0; // Initial angle
+                // Calculate the maximum radius of the circle based on the width and height of the screen
+                float maxRadius = min(width, height) * 4.2f; 
 
-                for (int i = 0; i < ab.size(); i++) {
-                    float radius = maxRadius * lerpedBuffer[i]; // Radius of the circle based on amplitude
-                    float x = cos(angle) * radius; // Calculate x position
-                    float y = sin(angle) * radius; // Calculate y position
+                // divide the circle into equal parts based on the size of the audio buffer
+                float step = TWO_PI / ab.size();  
+                float angle = 0;
 
-                    float c = map(i, 0, ab.size(), 0, 255); // Map color based on index
-                    stroke(c, 255, 255); // Set stroke color
-                    noFill(); // No fill for circles
-                    ellipse(x, y, 20, 20); // Draw the circle
+                for (int i = 0; i < ab.size(); i++)
+                {
+                    // radius of the circle based on the amplitude
+                    float radius = maxRadius * lerpedBuffer[i]; 
+                    // Calculate the x and y coordinates of the circle based on the radius and angle
+                    float x = cos(angle) * radius;
+                    float y = sin(angle) * radius; 
 
-                    angle += step; // Increment angle for the next circle
+                    float c = map(i, 0, ab.size(), 0, 255); 
+                    stroke(c, 255, 255); 
+                    noFill(); 
+                    ellipse(x, y, 20, 20);
+
+                    angle += step; 
                 }
                 break;
             }
@@ -175,7 +181,6 @@ public class Assignment extends PApplet{
                     circle(halfH - f, i, 10); 
                     stroke(255);
                     noFill();
-                    
                     popMatrix(); // Restore the transformation matrix
                 }
                 angle2 += 0.1; // Increment rotation angle
@@ -201,6 +206,9 @@ public class Assignment extends PApplet{
                 for (int i = 0; i < numCubes; i++)
                 {
                     pushMatrix();
+                    // Calculate the angle and x, y coordinates of the cube
+                    // two pi is the full circle
+                    
                     float angle = map(i, 0, numCubes, 0, TWO_PI);
                     float x = spacing * cos(angle);
                     float y = spacing * sin(angle);
