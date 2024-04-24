@@ -15,7 +15,7 @@ Github: https://github.com/RichardLazarica/Assignment
 [![YouTube](http://img.youtube.com/vi/J2kHSSFA4NU/0.jpg)](https://www.youtube.com/watch?v=J2kHSSFA4NU)
 
 # Screenshots
-[![alt text](https://github.com/RichardLazarica/Assignment/tree/master/java/data/FirstVisual.PNG)]
+![alt text](https://github.com/RichardLazarica/Assignment/blob/master/java/data/FirstVisual.PNG)
 
 # Description of the project
 Program that visualizes audio data using Processing and Minim libraries.
