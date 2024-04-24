@@ -19,6 +19,8 @@ import processing.core.PShape;
 
 
 
+
+
 public class Assignment extends PApplet{
     Minim minim;
     AudioPlayer ap;
@@ -27,6 +29,7 @@ public class Assignment extends PApplet{
 
 
     PShape cube;
+
 
 
     int mode = 0;
@@ -39,7 +42,6 @@ public class Assignment extends PApplet{
     float lerpedFrequency;
 
 
-
     //Case 9 VARIABLES
     int numCorners = 5; // Number of corners
     float radius1 = 150; // Radius of the first ring
@@ -48,6 +50,8 @@ public class Assignment extends PApplet{
 
     //Global variable for the color
     float cc;
+
+
 
 
     public void keyPressed() 
@@ -96,6 +100,8 @@ public class Assignment extends PApplet{
         cube = createShape(BOX, 50);
         cube.setStroke(color(255));
         cube.setFill(color(255, 0, 0));
+
+
     
     }
 
@@ -107,6 +113,8 @@ public class Assignment extends PApplet{
         float average = 0;
         float sum = 0;
         frameRate(60);
+
+
         
         // Calculate sum and average of the samples
         // Also lerp each element of buffer;
@@ -372,7 +380,7 @@ public class Assignment extends PApplet{
             {
                 background(0);
                 translate(width / 2, height / 2);
-                frameRate(60);
+                
                 float rotationAngle = frameCount * 0.02f; // Adjust rotation speed
                 
                 rotate(rotationAngle); // Apply rotation
@@ -421,8 +429,6 @@ public class Assignment extends PApplet{
                 rotateX(frameCount * 0.001f);
                 rotateY(frameCount * 0.001f);
                 
-                frameRate(60);
-            
              
                 for (int i = 0; i < numCorners; i++)
                 {
