@@ -21,6 +21,7 @@ Github: https://github.com/RichardLazarica/Assignment
 # Instructions for use
 
 # How it works:
+The user chooses between various visualisations by pressing keyboards keys between 0 - 9
 
 # List of classes/assets in the project
 
