@@ -19,8 +19,6 @@ import processing.core.PShape;
 
 
 
-
-
 public class Assignment extends PApplet{
     Minim minim;
     AudioPlayer ap;
@@ -29,7 +27,6 @@ public class Assignment extends PApplet{
 
 
     PShape cube;
-
 
 
     int mode = 0;
@@ -50,9 +47,6 @@ public class Assignment extends PApplet{
 
     //Global variable for the color
     float cc;
-
-
-
 
     public void keyPressed() 
     {
@@ -129,7 +123,6 @@ public class Assignment extends PApplet{
 
         switch (mode)
         {
-		
             // Draw circles based on amplitude
             case 0:
             {                
@@ -219,9 +212,6 @@ public class Assignment extends PApplet{
                 }
                 break;
             }
-            
-        
-
         }
 
     }
