@@ -17,8 +17,9 @@ Github: https://github.com/RichardLazarica/Assignment
 # Screenshots
 
 # Description of the project
-
-# Instructions for use
+Program that visualizes audio data using Processing and Minim libraries.
+The program reads audio data from a file and displays it in various ways based on the user's input.
+The user can switch between different visualizations by pressing keys from 0 to 9.
 
 # How it works:
 The user chooses between various visualisations by pressing keyboards keys between 0 - 9
