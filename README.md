@@ -26,9 +26,8 @@ Github: https://github.com/RichardLazarica/Assignment
 
 | Class/asset | Source |
 |-----------|-----------|
-| MyClass.cs | Self written |
-| MyClass1.cs | Modified from [reference]() |
-| MyClass2.cs | From [reference]() |
+| Assignment.java | Self written |
+
 
 # References
 * Item 1
