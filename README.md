@@ -12,7 +12,7 @@ Github: https://github.com/RichardLazarica/Assignment
 
 # Video
 
-![YouTube](https://www.youtube.com/watch?v=nitplYxNNro)
+[![YouTube](https://github.com/RichardLazarica/Assignment/blob/master/java/data/ThreeVisuals.PNG)](https://www.youtube.com/watch?v=nitplYxNNro)
 
 # Screenshots
 
