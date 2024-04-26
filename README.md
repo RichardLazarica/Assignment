@@ -1,7 +1,5 @@
 # Abstract Visual Story of a Song Team Project
 
-Include for each contributer:
-
 Name: Richard Lazarica
 
 Student Number: C22739341
